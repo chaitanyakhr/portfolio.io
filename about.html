@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SYS.BIO // CHAITANYA KHURANA</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* --- ANTI-DESIGN GLOBAL STYLES --- */
+  * { box-sizing: border-box; cursor: none !important; }
+  body {
+    background-color: #0000FF; color: #CCFF00; font-family: 'Space Mono', monospace;
+    margin: 0; padding: 5vw; cursor: none; overflow-x: hidden; width: 100%;
+  }
+
+  /* --- NEON CURSOR --- */
+  #neon-cursor {
+    position: fixed; width: 22px; height: 22px; border-radius: 50%;
+    background: #FF00FF;
+    box-shadow: 0 0 10px #FF00FF, 0 0 25px #FF00FF, 0 0 50px #FF00FF, 0 0 8px #CCFF00;
+    pointer-events: none; z-index: 100000;
+    transform: translate(-50%, -50%);
+    transition: width 0.1s, height 0.1s, box-shadow 0.15s;
+  }
+  #neon-cursor-trail {
+    position: fixed; width: 8px; height: 8px; border-radius: 50%;
+    background: #CCFF00;
+    box-shadow: 0 0 8px #CCFF00, 0 0 15px #CCFF00;
+    pointer-events: none; z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: left 0.15s ease-out, top 0.15s ease-out;
+  }
+
+  /* --- THEMED SCROLLBAR --- */
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #000; }
+  ::-webkit-scrollbar-thumb { background: #FF00FF; border: 2px solid #CCFF00; border-radius: 0; }
+  ::-webkit-scrollbar-thumb:hover { background: #CCFF00; border-color: #FF00FF; }
+  html { scrollbar-color: #FF00FF #000; scrollbar-width: thin; }
+  ::selection { background: #FF00FF; color: #000; }
+  /* --- Photo Border Fix --- */
+  .bio-grid {
+      align-items: start;
+  }
+  /* --- NAVIGATION --- */
+  .nav-bar {
+    margin-bottom: 4rem; border-bottom: 4px solid #FF00FF; padding-bottom: 1rem;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .back-btn {
+    color: #FF00FF; text-decoration: none; font-size: clamp(1rem, 3vw, 1.5rem); font-weight: bold;
+    text-transform: uppercase; background: #000; padding: 0.5rem 1rem; border: 2px solid #FF00FF;
+    transition: all 0.1s steps(2); display: inline-block;
+  }
+  .back-btn:hover { background: #FF00FF; color: #000; transform: translate(-5px, -5px); box-shadow: 5px 5px 0px #CCFF00; }
+
+  /* --- TERMINAL WINDOW --- */
+  .terminal-window {
+    background: #000; border: 4px solid #CCFF00; box-shadow: 15px 15px 0px #FF00FF;
+    max-width: 900px; margin: 0 auto; position: relative; width: 100%;
+  }
+  .terminal-header {
+    background: #CCFF00; color: #000; padding: 0.5rem 1rem; font-weight: bold; display: flex;
+    justify-content: space-between; text-transform: uppercase; border-bottom: 4px solid #000; word-break: break-all;
+  }
+  .terminal-body { padding: 3rem; font-size: 1.2rem; line-height: 1.8; }
+  .log-line { margin-bottom: 1.5rem; word-wrap: break-word; }
+  .log-prompt { color: #FF00FF; font-weight: bold; margin-right: 0.5rem; }
+  .status-tag {
+    display: inline-block; background: #CCFF00; color: #000; padding: 0 0.5rem; font-weight: bold; margin-left: 0.5rem; margin-top: 0.5rem;
+  }
+  .status-tag.aborted { background: #FF00FF; color: #000; }
+  .status-tag.active { background: #fff; color: #000; animation: blink 1s infinite; }
+
+  @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+  /* --- THE PORTRAIT --- */
+  .bio-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; margin-bottom: 2rem; }
+  .bio-image-container { border: 4px solid #FF00FF; padding: 0.5rem; background: #333; position: relative; }
+  .bio-image { width: 100%; aspect-ratio: 3/4; object-fit: cover; filter: grayscale(100%) contrast(200%); display: block; }
+
+  /* =========================================
+     MOBILE OPTIMIZATION
+     ========================================= */
+  @media (max-width: 768px) {
+    body { padding: 5vw 2vw; }
+    .bio-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .terminal-body { padding: 1.5rem; font-size: 1rem; }
+    .terminal-header { font-size: 0.8rem; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .terminal-window { box-shadow: 8px 8px 0px #FF00FF; } /* Smaller shadow for narrow screens */
+    #neon-cursor, #neon-cursor-trail { display: none; } /* Hide cursor on touch devices */
+  }
+</style>
+</head>
+<body>
+<div id="neon-cursor"></div>
+<div id="neon-cursor-trail"></div>
+
+  <nav class="nav-bar">
+    <a href="index.html" class="back-btn"><< RETURN_TO_ROOT</a>
+    <div style="font-size: clamp(1rem, 3vw, 1.5rem); font-weight: bold;">SYS.BIO</div>
+  </nav>
+
+  <div class="terminal-window">
+    <div class="terminal-header">
+      <span>C:\USERS\CHAITANYA\README.TXT</span>
+      <span>[X]</span>
+    </div>
+    
+    <div class="terminal-body">
+      <div class="bio-grid">
+        <div class="bio-image-container">
+          <img src="Photo.jpg" alt="Chaitanya Khurana" class="bio-image">
+        </div>
+        
+        <div class="bio-text">
+          <div class="log-line"><span class="log-prompt">> RUN INITIALIZE:</span> CHAITANYA_KHURANA.exe</div>
+          <div class="log-line">
+            <span class="log-prompt">> PREVIOUS_BUILD:</span> Mechanical Design Engineer
+            <br>Uptime: 3.5 Years. Engineered physical mechanics, drafted CAD systems, built tangible machines. 
+            <span class="status-tag aborted">[PROCESS TERMINATED]</span>
+          </div>
+          <div class="log-line">
+            <span class="log-prompt">> SYSTEM_OVERRIDE:</span> Shifted parameters from physical engineering to emotional engineering. Realized narrative pacing, visual rhythm, and structure are just a different kind of architecture. Executed a hard pivot into visual storytelling. 
+            <span class="status-tag">[SUCCESS]</span>
+          </div>
+          <div class="log-line">
+            <span class="log-prompt">> INTERMEDIATE_DATA:</span> Directed, shot, and edited multiple experimental and personal short films to test new timeline mechanics.
+          </div>
+        </div>
+      </div>
+
+      <div class="log-line" style="border-top: 2px dashed #FF00FF; padding-top: 1.5rem;">
+        <span class="log-prompt">> CURRENT_DIRECTORY:</span> Satyajit Ray Film and Television Institute (SRFTI) // Kolkata
+      </div>
+      <div class="log-line"><span class="log-prompt">> ACTIVE_PROCESS:</span> Postgraduate Degree in Cinema</div>
+      <div class="log-line">
+        <span class="log-prompt">> SPECIALIZATION:</span> FILM_EDITING 
+        <span class="status-tag active">[RENDERING IN PROGRESS...]</span>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Neon cursor logic
+  const cursor = document.getElementById('neon-cursor');
+  const trail = document.getElementById('neon-cursor-trail');
+  window.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    trail.style.left = e.clientX + 'px';
+    trail.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, [onclick]').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '35px';
+      cursor.style.height = '35px';
+      cursor.style.boxShadow = '0 0 15px #CCFF00, 0 0 35px #CCFF00, 0 0 60px #FF00FF';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '22px';
+      cursor.style.height = '22px';
+      cursor.style.boxShadow = '0 0 10px #FF00FF, 0 0 25px #FF00FF, 0 0 50px #FF00FF, 0 0 8px #CCFF00';
+    });
+  });
+</script>
+</body>
+</html>

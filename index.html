@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHAITANYA KHURANA [ROUGH_CUT_V1.FINAL]</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* --- ANTI-DESIGN GLOBAL STYLES --- */
+  * { box-sizing: border-box; cursor: none !important; } /* Crucial for preventing mobile overflow */
+  
+  body {
+    background-color: #0000FF; 
+    color: #CCFF00; 
+    font-family: 'Space Mono', monospace;
+    margin: 0;
+    padding: 0;
+    cursor: none; 
+    overflow-x: hidden; /* Stops horizontal scrolling */
+    width: 100%;
+  }
+
+  /* --- NEON CURSOR --- */
+  #neon-cursor {
+    position: fixed; width: 22px; height: 22px; border-radius: 50%;
+    background: #FF00FF;
+    box-shadow: 0 0 10px #FF00FF, 0 0 25px #FF00FF, 0 0 50px #FF00FF, 0 0 8px #CCFF00;
+    pointer-events: none; z-index: 100000;
+    transform: translate(-50%, -50%);
+    transition: width 0.1s, height 0.1s, box-shadow 0.15s;
+  }
+  #neon-cursor-trail {
+    position: fixed; width: 8px; height: 8px; border-radius: 50%;
+    background: #CCFF00;
+    box-shadow: 0 0 8px #CCFF00, 0 0 15px #CCFF00;
+    pointer-events: none; z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: left 0.15s ease-out, top 0.15s ease-out;
+  }
+
+  /* --- THEMED SCROLLBAR --- */
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #000; }
+  ::-webkit-scrollbar-thumb { background: #FF00FF; border: 2px solid #CCFF00; border-radius: 0; }
+  ::-webkit-scrollbar-thumb:hover { background: #CCFF00; border-color: #FF00FF; }
+  html { scrollbar-color: #FF00FF #000; scrollbar-width: thin; }
+  
+  ::selection { background: #FF00FF; color: #000; }
+
+  /* --- THE CHAOTIC MARQUEE --- */
+  .marquee-container {
+    background: #CCFF00;
+    color: #000;
+    padding: 0.5rem 0;
+    border-bottom: 4px solid #000;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    z-index: 1000;
+    position: relative;
+    width: 100%;
+  }
+  .marquee-content {
+    display: inline-block;
+    animation: scroll 10s linear infinite;
+  }
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* --- HERO SECTION --- */
+  .hero {
+    padding: 10vw 5vw;
+    border-bottom: 8px solid #CCFF00;
+    position: relative;
+    width: 100%;
+  }
+  .hero h1 {
+    font-size: clamp(3rem, 12vw, 10rem);
+    line-height: 0.8;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: -5px;
+    word-wrap: break-word; /* Ensures long names break safely */
+  }
+  .hero h1 span { color: #FF00FF; display: block; }
+  .hero-meta {
+    margin-top: 2rem;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    border: 2px dashed #CCFF00;
+    display: inline-block;
+    padding: 1rem;
+    background: #000;
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+
+  /* --- BRUTALIST PORTFOLIO (6 ITEMS) --- */
+  .portfolio {
+    padding: 10vw 5vw 15vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .project-card {
+    border: 4px solid #CCFF00;
+    background: #000;
+    width: 80%;
+    max-width: 650px;
+    margin-bottom: -4rem;
+    position: relative;
+    transition: all 0.1s steps(3); 
+    box-shadow: 15px 15px 0px #FF00FF;
+    display: block; 
+    text-decoration: none;
+    color: currentColor;
+  }
+
+  /* DESKTOP CHAOTIC PLACEMENTS */
+  .project-card:nth-child(1) { align-self: flex-start; z-index: 1; }
+  .project-card:nth-child(2) {
+    align-self: flex-end; margin-top: 2rem; border-color: #FF00FF; box-shadow: -15px 15px 0px #CCFF00; color: #FF00FF; z-index: 2;
+  }
+  .project-card:nth-child(3) { align-self: center; margin-top: 4rem; width: 60%; z-index: 3; }
+  .project-card:nth-child(4) {
+    align-self: flex-start; margin-top: 6rem; margin-left: 5vw; border-color: #FF00FF; box-shadow: 15px -15px 0px #000; color: #FF00FF; z-index: 4;
+  }
+  .project-card:nth-child(5) { align-self: flex-end; margin-top: 2rem; margin-right: 10vw; width: 70%; z-index: 5; }
+  .project-card:nth-child(6) { align-self: center; margin-top: 8rem; width: 90%; max-width: 800px; box-shadow: 20px 20px 0px #FF00FF; z-index: 6; }
+
+  .project-card:hover {
+    transform: translate(-5px, -5px); background: #CCFF00 !important; color: #000 !important; box-shadow: 25px 25px 0px #000 !important; z-index: 100 !important; border-color: #000 !important;
+  }
+  .project-card:hover .video-container { border-color: #000; }
+
+  .video-container {
+    width: 100%; aspect-ratio: 16/9; background: #333; border-bottom: 4px solid currentColor; position: relative; overflow: hidden; transition: border-color 0.1s steps(2);
+  }
+  
+  .project-video {
+    width: 100%; height: 100%; object-fit: cover; filter: contrast(150%) saturate(0%); transition: filter 0.1s steps(2);
+  }
+  .project-card:hover .project-video { filter: contrast(120%) saturate(200%); }
+
+  .project-info {
+    padding: 1.5rem; display: flex; flex-direction: column; gap: 0.8rem; text-transform: uppercase; font-weight: bold; font-size: 0.9rem;
+  }
+  .info-header { display: flex; justify-content: space-between; font-size: 1.2rem; border-bottom: 2px dashed currentColor; padding-bottom: 0.5rem; word-wrap: break-word; }
+  .info-details { display: flex; flex-direction: column; gap: 0.3rem; }
+  .info-details span { opacity: 0.8; }
+
+  /* --- RAW FOOTER --- */
+  footer {
+    padding: 10vw 5vw 15vw; background: #000; color: #CCFF00; border-top: 8px solid #FF00FF; position: relative; z-index: 200; width: 100%;
+  }
+  .footer-flex { display: flex; flex-wrap: wrap; gap: 4rem; align-items: flex-start; }
+
+  .creator-fingerprint {
+    flex: 0 0 250px; border: 4px solid #FF00FF; background: #000; position: relative; transition: all 0.1s steps(2); box-shadow: 10px 10px 0px #CCFF00; max-width: 100%;
+  }
+  .creator-fingerprint:hover { transform: rotate(-3deg) scale(1.05); background: #FF00FF; color: #000; }
+  .creator-photo { width: 100%; aspect-ratio: 1/1; object-fit: cover; filter: grayscale(100%) contrast(150%) brightness(110%); border-bottom: 4px solid #FF00FF; display: block; transition: filter 0.1s steps(2); }
+  .creator-fingerprint:hover .creator-photo { filter: none; border-color: #000; }
+  .creator-meta { padding: 1rem; font-size: 0.9rem; text-transform: uppercase; font-weight: bold; }
+
+  .big-link {
+    font-size: clamp(1.5rem, 5vw, 4rem); display: block; color: #FF00FF; text-decoration: none; line-height: 1.1; margin-bottom: 1rem; word-wrap: break-word; word-break: break-all;
+  }
+  .big-link:hover { color: #000; background: #CCFF00; }
+
+  .timecode {
+    position: fixed; bottom: 20px; right: 20px; background: #000; color: #f00; padding: 5px 10px; border: 2px solid #f00; z-index: 1000; font-size: clamp(0.9rem, 2vw, 1.2rem);
+  }
+
+  /* =========================================
+     MOBILE OPTIMIZATION: STACK THE CHAOS
+     ========================================= */
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 3.5rem; /* Force a safe size for "CHAITANYA" */
+      letter-spacing: -2px;
+    }
+    
+    /* Reset all project cards to stack safely */
+    .portfolio { padding-bottom: 25vw; }
+    .project-card, 
+    .project-card:nth-child(1),
+    .project-card:nth-child(2),
+    .project-card:nth-child(3),
+    .project-card:nth-child(4),
+    .project-card:nth-child(5),
+    .project-card:nth-child(6) {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 0 2rem 0; /* Standard margin, no overlaps */
+      align-self: center;
+      box-shadow: 8px 8px 0px currentColor; /* Smaller shadows so they don't bleed off screen */
+    }
+
+    .info-header { flex-direction: column; gap: 0.5rem; }
+    
+    .footer-flex { flex-direction: column; gap: 2rem; align-items: center; text-align: center; }
+    .creator-fingerprint { width: 100%; max-width: 300px; }
+    #neon-cursor, #neon-cursor-trail { display: none; } /* Hide cursor on touch devices */
+  }
+</style>
+</head>
+<body>
+<div id="neon-cursor"></div>
+<div id="neon-cursor-trail"></div>
+
+  <div class="marquee-container">
+    <div class="marquee-content">
+      NO TEMPLATES // NO BULLSHIT // CHAITANYA KHURANA // RAW CUTS ONLY // FILE_NOT_FOUND // NO TEMPLATES // NO BULLSHIT // CHAITANYA KHURANA // RAW CUTS ONLY // FILE_NOT_FOUND //
+    </div>
+  </div>
+
+  <header class="hero">
+    <h1>CHAITANYA<br><span>KHURANA</span></h1>
+    <div class="hero-meta">
+      > ROLE: FILM_EDITOR<br>
+      > STATUS: OPEN_FOR_WORK<br>
+      > FINAL-V5-COPY-COPY.PORTFOLIO
+    </div>
+  </header>
+
+  <section class="portfolio">
+    <a href="project.html?id=1" class="project-card">
+      <div class="video-container">
+        <video class="project-video" muted loop playsinline src="video1.mp4"></video>
+      </div>
+      <div class="project-info">
+        <div class="info-header"><span>SYS.01 // HAPPY_RETIREMENT.MP4</span><span>[PLAY]</span></div>
+        <div class="info-details">
+          <span>> LOG: Happy retired life dad! A heartfelt personal tribute.</span>
+          <span>> ROLE: DIRECTOR & EDITOR</span>
+          <span>> FORMAT: PERSONAL PROJECT</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="project.html?id=2" class="project-card">
+      <div class="video-container">
+        <video class="project-video" muted loop playsinline src="https://assets.mixkit.co/videos/preview/mixkit-red-frog-on-a-log-1487-large.mp4"></video>
+      </div>
+      <div class="project-info">
+        <div class="info-header"><span>SYS.02 // LEARN_BENGALI.MP4</span><span>[PLAY]</span></div>
+        <div class="info-details">
+          <span>> LOG: Short Narrative Project made in 2nd Semester, SRFTI.</span>
+          <span>> ROLE: DIRECTOR & EDITOR</span>
+          <span>> FORMAT: SRFTI // 2ND SEM</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="project.html?id=3" class="project-card">
+      <div class="video-container">
+        <video class="project-video" muted loop playsinline src="https://assets.mixkit.co/videos/preview/mixkit-man-runs-past-ground-level-shot-32809-large.mp4"></video>
+      </div>
+      <div class="project-info">
+        <div class="info-header"><span>SYS.03 // HYBRID_BHARATANATYAM.MP4</span><span>[PLAY]</span></div>
+        <div class="info-details">
+          <span>> LOG: A fusion dance piece blending classical Bharatanatyam with contemporary movement.</span>
+          <span>> ROLE: EDITOR</span>
+          <span>> FORMAT: DANCE FILM</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="project.html?id=4" class="project-card">
+      <div class="video-container">
+        <video class="project-video" muted loop playsinline src="https://assets.mixkit.co/videos/preview/mixkit-underwater-swimming-of-a-diver-in-the-ocean-156-large.mp4"></video>
+      </div>
+      <div class="project-info">
+        <div class="info-header"><span>SYS.04 // DONT_STOP_MV.MP4</span><span>[PLAY]</span></div>
+        <div class="info-details">
+          <span>> LOG: A dynamic edit set to Foster the People's energetic track.</span>
+          <span>> ROLE: EDITOR</span>
+          <span>> FORMAT: MUSIC VIDEO</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="project.html?id=5" class="project-card">
+      <div class="video-container">
+        <video class="project-video" muted loop playsinline src="https://assets.mixkit.co/videos/preview/mixkit-ink-swirling-in-water-238-large.mp4"></video>
+      </div>
+      <div class="project-info">
+        <div class="info-header"><span>SYS.05 // PARALLEL_ACTION.MP4</span><span>[PLAY]</span></div>
+        <div class="info-details">
+          <span>> LOG: An editing exercise exploring parallel action and cross-cutting techniques.</span>
+          <span>> ROLE: EDITOR</span>
+          <span>> FORMAT: SRFTI // EDITING EXERCISE</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="project.html?id=6" class="project-card">
+      <div class="video-container">
+        <video class="project-video" muted loop playsinline src="https://assets.mixkit.co/videos/preview/mixkit-dust-particles-floating-in-the-air-macro-shot-4209-large.mp4"></video>
+      </div>
+      <div class="project-info">
+        <div class="info-header"><span>SYS.06 // TIME_EXPANSION.MP4</span><span>[PLAY]</span></div>
+        <div class="info-details">
+          <span>> LOG: An editing exercise focused on expanding time through cuts and pacing.</span>
+          <span>> ROLE: EDITOR</span>
+          <span>> FORMAT: SRFTI // EDITING EXERCISE</span>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <footer>
+    <div class="footer-flex">
+      <div class="creator-fingerprint">
+        <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=1000&auto=format&fit=crop" alt="Chaitanya Khurana Portrait" class="creator-photo">
+        <div class="creator-meta">
+          CHAITANYA_KHURANA_V1.RNDR<br>
+          <span style="font-weight:400;font-style:italic;">[SYSTEM_EDITOR]</span>
+        </div>
+      </div>
+
+      <div style="flex:1;">
+        <p>> INITIATE CONTACT PROTOCOL:</p>
+        <a href="mailto:contact@chaitanyakhurana.in" class="big-link">CONTACT@<br>CHAITANYA<br>KHURANA.IN</a>
+        <a href="about.html" class="big-link" style="color:#fff; border-bottom: 4px dashed #fff; display:inline-block; margin: 2rem 0;">>> READ_SYS_BIO.TXT</a><br>
+        <a href="#" class="big-link">VIMEO_RAW</a>
+        <a href="#" class="big-link">INSTAGRAM.JPG</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="timecode" id="tc">SRC_TC: 00:00:00:00</div>
+
+<script>
+    const tcElement = document.getElementById('tc');
+    let frames = 0, seconds = 0, minutes = 0, hours = 1;
+    setInterval(() => {
+      frames++;
+      if(frames > 23) { frames = 0; seconds++; }
+      if(seconds > 59) { seconds = 0; minutes++; }
+      if(minutes > 59) { minutes = 0; hours++; }
+      const pad = (num) => num.toString().padStart(2, '0');
+      
+      // Added SRC_TC: right before the timer numbers
+      tcElement.innerText = `SRC_TC: ${pad(hours)}:${pad(minutes)}:${pad(seconds)}:${pad(frames)}`;
+    }, 1000/24);
+
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+      const video = card.querySelector('.project-video');
+      card.addEventListener('mouseenter', () => { if(video) video.play(); });
+      card.addEventListener('mouseleave', () => { if(video) setTimeout(() => { video.pause(); }, 200); });
+    });
+
+    // Neon cursor logic
+    const cursor = document.getElementById('neon-cursor');
+    const trail = document.getElementById('neon-cursor-trail');
+    window.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      trail.style.left = e.clientX + 'px';
+      trail.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button, [onclick]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width = '35px';
+        cursor.style.height = '35px';
+        cursor.style.boxShadow = '0 0 15px #CCFF00, 0 0 35px #CCFF00, 0 0 60px #FF00FF';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width = '22px';
+        cursor.style.height = '22px';
+        cursor.style.boxShadow = '0 0 10px #FF00FF, 0 0 25px #FF00FF, 0 0 50px #FF00FF, 0 0 8px #CCFF00';
+      });
+    });
+  </script>
+</body>
+</html>
