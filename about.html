@@ -61,7 +61,7 @@
   }
   .terminal-header {
     background: #CCFF00; color: #000; padding: 0.5rem 1rem; font-weight: bold; display: flex;
-    justify-content: space-between; text-transform: uppercase; border-bottom: 4px solid #000; word-break: break-all;
+    justify-content: space-between; text-transform: uppercase; border-bottom: 4px solid #000; word-break: break-all; 
   }
   .terminal-body { padding: 3rem; font-size: 1.2rem; line-height: 1.8; }
   .log-line { margin-bottom: 1.5rem; word-wrap: break-word; }
@@ -86,7 +86,7 @@
     body { padding: 5vw 2vw; }
     .bio-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     .terminal-body { padding: 1.5rem; font-size: 1rem; }
-    .terminal-header { font-size: 0.8rem; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .terminal-header { font-size: 0.8rem; flex-direction: row; align-items: flex-start; gap: 0.5rem; }
     .terminal-window { box-shadow: 8px 8px 0px #FF00FF; } /* Smaller shadow for narrow screens */
     #neon-cursor, #neon-cursor-trail { display: none; } /* Hide cursor on touch devices */
   }
@@ -103,8 +103,8 @@
 
   <div class="terminal-window">
     <div class="terminal-header">
-      <span>C:\USERS\CHAITANYA\README.TXT</span>
-      <span>[X]</span>
+      <span class="file-path">C:\USERS\CHAITANYA\README.TXT</span>
+      <span class="close-icon">[X]</span>
     </div>
     
     <div class="terminal-body">

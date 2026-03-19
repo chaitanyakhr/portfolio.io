@@ -316,9 +316,10 @@
   </section>
 
   <footer>
+  <a href="about.html" style="text-decoration: none; color: inherit; display: contents;">
     <div class="footer-flex">
       <div class="creator-fingerprint">
-        <img href="about.html" src="Photo.jpg" alt="Chaitanya Khurana Portrait" class="creator-photo">
+        <img  src="Photo.jpg" alt="Chaitanya Khurana Portrait" class="creator-photo">
         <div class="creator-meta">
           CHAITANYA_KHURANA_V1.RNDR<br>
           <span style="font-weight:400;font-style:italic;">[SYSTEM_EDITOR]</span>
@@ -327,12 +328,13 @@
 
       <div style="flex:1;">
         <p>> INITIATE CONTACT PROTOCOL:</p>
-        <a href="mailto:contact@chaitanyakhurana.in" class="big-link">CONTACT@CHAITANYAKHURANA.IN</a>
+        <a href="mailto:work@chaitanyakhurana.in" class="big-link">WORK@CHAITANYAKHURANA.IN</a>
         <a href="about.html" class="big-link" style="color:#fff; border-bottom: 4px dashed #fff; display:inline-block; margin: 2rem 0;">>> READ_SYS_BIO.TXT</a><br>
         <a href="https://www.instagram.com/chaitanya.life/" class="big-link">INSTAGRAM.JPG</a>
 		<!-- <a href="#" class="big-link">VIMEO_RAW</a> -->
       </div>
     </div>
+	</a>
   </footer>
 
   <div class="timecode" id="tc">SRC_TC: 00:00:00:00</div>
@@ -355,7 +357,7 @@
     projectCards.forEach(card => {
       const video = card.querySelector('.project-video');
       card.addEventListener('mouseenter', () => { if(video) video.play(); });
-      card.addEventListener('mouseleave', () => { if(video) setTimeout(() => { video.pause(); }, 200); });
+      <!-- card.addEventListener('mouseleave', () => { if(video) setTimeout(() => { video.pause(); }, 200); }); -->
     });
 
     // Neon cursor logic
